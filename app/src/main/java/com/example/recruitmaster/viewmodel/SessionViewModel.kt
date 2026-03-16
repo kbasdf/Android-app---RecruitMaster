@@ -12,17 +12,22 @@ import kotlinx.coroutines.launch
 import android.util.Log
 
 class SessionViewModel(
-    private val repository: SessionRepository = SessionRepository(ApiClient.apiService)
+    private val repository: SessionRepository = SessionRepository(ApiClient.apiService),
 ) : ViewModel() {
 
     var pages by mutableStateOf(
-        listOf(
-            SessionPage("Welcome", "Hardcoded text..."),
-            SessionPage("Purpose", "Hardcoded text..."),
-            SessionPage("Basics", "Hardcoded text..."),
-            SessionPage("Page 4"), // blank initially
-            SessionPage("Page 5")  // blank initially
-        )
+        List(30) { i ->
+            if (i < 3) {
+                val hardcoded = listOf(
+                    SessionPage("Welcome", "Hardcoded text for Welcome page..."),
+                    SessionPage("Purpose", "Hardcoded text for Purpose page..."),
+                    SessionPage("Basics", "Hardcoded text for Basics page...")
+                )
+                hardcoded[i]
+            } else {
+                SessionPage("Page ${i + 1}")
+            }
+        }
     )
         private set
 
